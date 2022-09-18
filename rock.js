@@ -9,17 +9,23 @@ const sBtn = document.querySelector('#scissorsBtn');
 let playerWins = 0
 let computerWins = 0
 
-rBtn.addEventListener('click', function() {
+rBtn.addEventListener('click', respondRock); 
+
+function respondRock() {
     game("rock");
-});
+};
 
-pBtn.addEventListener('click', function() {
+pBtn.addEventListener('click', respondPaper); 
+
+function respondPaper() {
     game("paper");
-});
+};
 
-sBtn.addEventListener('click', function() {
+sBtn.addEventListener('click', respondScissors); 
+
+function respondScissors() {
     game("scissors");
-});
+};
 
 scoreButton.addEventListener('click', function() {
     results.appendChild(scoreContainer);
@@ -43,7 +49,11 @@ function game(playerSelection) {
     scoreContainer.appendChild(playerScore);
     scoreContainer.appendChild(br);
     scoreContainer.appendChild(computerScore);
+
+    if ((computerWins == 5) || (playerWins == 5)) {
+    victory();
     }
+}
 
 //create a random number, 1-3//
 function getComputerChoice() {
@@ -114,12 +124,21 @@ function playRound(playerSelection, computerSelection) {
 
 //declare a winner
 function victory() {
-    if (playerWins > compWins) {
-    return "You won!";
+    if (playerWins > computerWins) {
+    win = document.createElement('div');
+    win.textContent = "You won!";
+    scoreContainer.append(win);
     }
     else{
-        return "You lost!";
+    lose = document.createElement('div');
+    lose.textContent = "You lost!";
+    scoreContainer.append(lose);
     }
+    rBtn.removeEventListener('click', respondRock); 
+    
+    pBtn.removeEventListener('click', respondPaper);
+    
+    sBtn.removeEventListener('click', respondScissors);
 }
 
 //DOM for win counter which should ideally appear after the first round//

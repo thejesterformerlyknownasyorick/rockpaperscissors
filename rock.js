@@ -1,7 +1,13 @@
+scoreButton = document.querySelector('.btn');
+
 //establish buttons and function of input
 const rBtn = document.querySelector('#rockBtn');
 const pBtn = document.querySelector('#paperBtn');
 const sBtn = document.querySelector('#scissorsBtn');
+
+//score counters//
+let playerWins = 0
+let computerWins = 0
 
 rBtn.addEventListener('click', function() {
     game("rock");
@@ -15,13 +21,28 @@ sBtn.addEventListener('click', function() {
     game("scissors");
 });
 
+scoreButton.addEventListener('click', function() {
+    results.appendChild(scoreContainer);
+}, {once: true});
+
+
 //begin game with button selection as player input
 function game(playerSelection) {
     //produce computer choice//
     const computerSelection = getComputerChoice();
     //display outcome//
-    playRound(playerSelection, computerSelection);
-    console.log(playRound(playerSelection, computerSelection));
+    resultComment.textContent = playRound(playerSelection, computerSelection);
+
+    scoreHeader.textContent = "Current score:"
+    playerScore.textContent = `Player Score: ${playerWins}`
+    computerScore.textContent = `Computer Score: ${computerWins}`
+
+    scoreContainer.appendChild(resultComment);
+    scoreContainer.appendChild(scoreHeader);
+    scoreContainer.appendChild(br);
+    scoreContainer.appendChild(playerScore);
+    scoreContainer.appendChild(br);
+    scoreContainer.appendChild(computerScore);
     }
 
 //create a random number, 1-3//
@@ -49,9 +70,11 @@ There may be a more succinct way of doing that as well, and if I think of one, I
 function playRound(playerSelection, computerSelection) {
     if (playerSelection == "rock") {
         if (computerSelection == "scissors") {
+            playerWins++;
             return "You win! Rock beats scissors. Dismantle the tools of production! You have nothing to lose but your chains!";
         }
         else if (computerSelection == "paper") {
+            computerWins++;
             return "You lose! Paper beats rock. Somehow. The whole paper beating rock thing never really made sense, did it?";
         }
         else {
@@ -60,9 +83,11 @@ function playRound(playerSelection, computerSelection) {
     }
     else if (playerSelection == "paper") {
         if (computerSelection == "rock") {
+            playerWins++;
             return "You win! Paper beats rock. Conceal their weapons and you will never know defeat.";
         }
         else if (computerSelection == "scissors") {
+            computerWins++;
             return "You lose! Scissors beats paper. Hope that document wasn't important.";
         }
         else {
@@ -71,9 +96,11 @@ function playRound(playerSelection, computerSelection) {
     }
     else if (playerSelection == "scissors") {
         if (computerSelection == "paper") {
+            playerWins++;
             return "You win! Paper beats scissors. If there's no receipt, you can't prove it happened.";
         }
         else if (computerSelection == "rock") {
+            computerWins++;
             return "You lose! Rock beats scissors. But it can never break your spirit.";
         }
         else {
@@ -82,7 +109,7 @@ function playRound(playerSelection, computerSelection) {
     }
     else {
         return "No you're doing it wrong. Stop it. You're ruining my game."
-    }
+    }  
 }
 
 //declare a winner
@@ -90,28 +117,16 @@ function victory() {
     if (playerWins > compWins) {
     return "You won!";
     }
-    else if (playerWins < compWins) {
+    else{
         return "You lost!";
-    }
-    else {
-        return "A tie?! But I wanted to see someone lose a finger.";
     }
 }
 
 //DOM for win counter which should ideally appear after the first round//
 const results = document.querySelector('.results');
+const resultComment = document.createElement('p');
+const scoreContainer = document.createElement('div');
 const scoreHeader = document.createElement('div');
 const playerScore = document.createElement('div');
 const computerScore = document.createElement('div');
 const br = document.createElement('br');
-
-scoreHeader.textContent = "Current score:"
-playerScore.textContent = `Player Score: ${playerWins}`
-computerScore.textContent = `Computer Score: ${computerWins}`
-
-results.appendChild(scoreHeader);
-results.appendChild(br);
-results.appendChild(playerScore);
-results.appendChild(br);
-results.appendChild(computerScore);
-

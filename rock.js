@@ -1,5 +1,3 @@
-scoreButton = document.querySelector('.btn');
-
 //establish buttons and function of input
 const rBtn = document.querySelector('#rockBtn');
 const pBtn = document.querySelector('#paperBtn');
@@ -27,10 +25,17 @@ function respondScissors() {
     game("scissors");
 };
 
-scoreButton.addEventListener('click', function() {
+rBtn.addEventListener('click', function() {
     results.appendChild(scoreContainer);
 }, {once: true});
 
+pBtn.addEventListener('click', function() {
+    results.appendChild(scoreContainer);
+}, {once: true});
+
+sBtn.addEventListener('click', function() {
+    results.appendChild(scoreContainer);
+}, {once: true});
 
 //begin game with button selection as player input
 function game(playerSelection) {
